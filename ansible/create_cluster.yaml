@@ -53,7 +53,7 @@
 
   - name: Create a new security group
     ec2_group:
-      name: K8s security group
+      name: contrail K8s security group
       description: It allows ports 22, 80,8080 and 443 in and 80 and 443 out
       vpc_id: "{{vpc.vpc_id}}"
       region: "{{ region_tag }}"
@@ -71,7 +71,7 @@
           to_port: 65535
           cidr_ip: 0.0.0.0/0
         - proto: all
-          group_name: K8s security group
+          group_name: contrail K8s security group
       rules_egress:
         - proto: tcp
           from_port: 0
