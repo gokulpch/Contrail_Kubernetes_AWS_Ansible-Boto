@@ -151,7 +151,7 @@
   tasks:
 
     - name: Executing Script to Enable Root Access to Instances
-      script: ./ansible/utils/enable_root_access.sh
+      script: ./utils/enable_root_access.sh
 
 - hosts: master
   remote_user: root
@@ -159,7 +159,7 @@
   tasks:
 
     - name: Set Username on Master
-      script: ./ansible/utils/set_hostname_master.sh
+      script: ./utils/set_hostname_master.sh
 
 - hosts: minions
   remote_user: root
@@ -167,7 +167,7 @@
   tasks:
 
     - name: Set Username on Node
-      script: ./ansible/utils/set_hostname_node.sh
+      script: ./utils/set_hostname_node.sh
 
 - hosts: launched
   remote_user: root
@@ -189,7 +189,7 @@
       apt: upgrade=dist
 
     - name: Install docker
-      script: ./ansible/utils/install_docker.sh
+      script: ./utils/install_docker.sh
 
     - name: Install kubelet
       apt: name=kubelet state=present
@@ -209,10 +209,10 @@
   tasks:
 
     - name: Install Ansible
-      script: ./ansible/utils/install_ansible.sh
+      script: ./utils/install_ansible.sh
 
     - name: Executing Scripts to Pull Contrail Packages and Docker Images
-      script: ./ansible/utils/get_contrail_install_pkg.sh
+      script: ./utils/get_contrail_install_pkg.sh
 
 - hosts: localhost
   remote_user: root
@@ -220,7 +220,7 @@
   tasks:
 
     - name: Executing Scripts to Populate Hosts File with Node IP
-      script: ./ansible/utils/populate_hosts_minion_IP.sh
+      script: ./utils/populate_hosts_minion_IP.sh
 
 - hosts: master
   remote_user: root
@@ -228,7 +228,7 @@
   tasks:
 
     - name: Executing Scripts to Populate Hosts File with Master IP
-      script: ./ansible/utils/populate_hosts_master_IP.sh
+      script: ./utils/populate_hosts_master_IP.sh
 
 - hosts: localhost
   remote_user: root
@@ -236,7 +236,7 @@
   tasks:
 
     - name: Executing Scripts to Copy Keys for Contrail-Ansible on Master
-      script: ./ansible/utils/copy_ssh_keys.sh
+      script: ./utils/copy_ssh_keys.sh
 
 - hosts: master
   remote_user: root
@@ -244,7 +244,7 @@
   tasks:
 
     - name: Execute Contrail-Ansible
-      script: ./ansible/utils/execute_contrail_ansible.sh
+      script: ./utils/execute_contrail_ansible.sh
 
 - hosts: master
   remote_user: root
@@ -252,7 +252,7 @@
   tasks:
 
     - name: Disable Network_Args on Master
-      script: ./ansible/utils/disable_cni_master.sh
+      script: ./utils/disable_cni_master.sh
 
 - hosts: master
   remote_user: ubuntu
@@ -284,16 +284,16 @@
   tasks:
 
     - name: Transfer the script to enable Kubectl admin.conf
-      copy: src=./ansible/utils/set_auth_kubeconfig.sh dest=/home/ubuntu mode=0777
+      copy: src=./utils/set_auth_kubeconfig.sh dest=/home/ubuntu mode=0777
 
     - name: Set admin.conf for Kubectl access
       command: bash /home/ubuntu/set_auth_kubeconfig.sh
 
     - name: Enable Insecure port and Insecure bind Address
-      script: ./ansible/utils/enable_insecure_port.sh
+      script: ./utils/enable_insecure_port.sh
 
     - name: Copy Kubernetes Dashboard YAML
-      copy: src=./ansible/utils/create_K8S_dashboard.sh dest=/root/. mode=0777
+      copy: src=./utils/create_K8S_dashboard.sh dest=/root/. mode=0777
 
     - name: Get Kubernetes Dashboard YAML
-      script: ./ansible/utils/create_K8S_dashboard.sh
+      script: ./utils/create_K8S_dashboard.sh
