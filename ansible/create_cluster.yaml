@@ -95,7 +95,7 @@
       instance_type: "{{ flavor }}"
       image:  "{{ ami }}"
       wait: yes
-      group: "K8s security group"
+      group: "contrail K8s security group"
       count: 1
       vpc_subnet_id: "{{ subnet.subnet.id }}"
       instance_tags:
@@ -121,7 +121,7 @@
       instance_type: "{{ flavor }}"
       image:  "{{ ami }}"
       wait: yes
-      group: "K8s security group"
+      group: "contrail K8s security group"
       count: 1
       vpc_subnet_id: "{{ subnet.subnet.id }}"
       instance_tags:
