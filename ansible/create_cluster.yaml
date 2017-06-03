@@ -17,7 +17,7 @@
       state: present
       cidr_block: "{{ cidr_block }}"
       resource_tags:
-        Name: k8s-vpc
+        Name: contrailk8s-vpc
       region: "{{ region_tag }}"
       internet_gateway: True
       subnets:
@@ -45,7 +45,7 @@
       cidr: "{{ subnet_cidr }}"
       region: "{{ region_tag }}"
       resource_tags:
-        Name: k8s-subnet
+        Name: contrailk8s-subnet
     register: subnet
 
   - name: get my public IP
