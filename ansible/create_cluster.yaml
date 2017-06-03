@@ -4,8 +4,8 @@
     name_tag2: contrail-K8S-Minion
     region_tag: us-west-2
     availability_zone: us-west-2b
-    cidr_block: 172.23.0.0/16
-    subnet_cidr: 172.23.1.0/24
+    cidr_block: 172.24.0.0/16
+    subnet_cidr: 172.24.1.0/24
     ami: ami-efd0428f
     flavor: t2.xlarge
     key: contrailK8S-keypair
@@ -25,12 +25,19 @@
           az: "{{ availability_zone }}"
       route_tables:
         - subnets:
-            - 172.23.1.0/24
+            - 172.24.1.0/24
           routes:
             - dest: 0.0.0.0/0
               gw: igw
     register: vpc
-
+    
+  - name: get igw
+    ec2_vpc_igw:
+      vpc_id: "{{ vpc.vpc_id }}"
+      region: "{{ region_tag }}"
+      state: present
+    register: igw
+    
   - name: Create a new Subnet
     ec2_vpc_subnet:
       state: present
