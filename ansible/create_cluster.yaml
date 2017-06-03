@@ -1,0 +1,292 @@
+- hosts: localhost
+  vars:
+    name_tag1: contrail-K8S-Master
+    name_tag2: contrail-K8S-Minion
+    region_tag: us-west-2
+    availability_zone: us-west-2b
+    cidr_block: 172.23.0.0/16
+    subnet_cidr: 172.23.1.0/24
+    ami: ami-efd0428f
+    flavor: t2.xlarge
+    key: contrailK8S-keypair
+
+  tasks:
+
+  - name: Create a new VPC
+    ec2_vpc:
+      state: present
+      cidr_block: "{{ cidr_block }}"
+      resource_tags:
+        Name: k8s-vpc
+      region: "{{ region_tag }}"
+      internet_gateway: True
+      subnets:
+        - cidr: "{{ subnet_cidr }}"
+          az: "{{ availability_zone }}"
+      route_tables:
+        - subnets:
+            - 172.23.1.0/24
+          routes:
+            - dest: 0.0.0.0/0
+              gw: igw
+    register: vpc
+
+  - name: Create a new Subnet
+    ec2_vpc_subnet:
+      state: present
+      vpc_id: "{{ vpc.vpc_id }}"
+      cidr: "{{ subnet_cidr }}"
+      region: "{{ region_tag }}"
+      resource_tags:
+        Name: k8s-subnet
+    register: subnet
+
+  - name: get my public IP
+    ipify_facts:
+
+  - name: Create a new security group
+    ec2_group:
+      name: K8s security group
+      description: It allows ports 22, 80,8080 and 443 in and 80 and 443 out
+      vpc_id: "{{vpc.vpc_id}}"
+      region: "{{ region_tag }}"
+      rules:
+        - proto: tcp
+          from_port: 0
+          to_port: 65535
+          cidr_ip: 0.0.0.0/0
+        - proto: icmp
+          from_port: -1
+          to_port: -1
+          cidr_ip: 0.0.0.0/0
+        - proto: udp
+          from_port: 0
+          to_port: 65535
+          cidr_ip: 0.0.0.0/0
+        - proto: all
+          group_name: K8s security group
+      rules_egress:
+        - proto: tcp
+          from_port: 0
+          to_port: 65535
+          cidr_ip: 0.0.0.0/0
+        - proto: icmp
+          from_port: -1
+          to_port: -1
+          cidr_ip: 0.0.0.0/0
+        - proto: udp
+          from_port: 0
+          to_port: 65535
+          cidr_ip: 0.0.0.0/0
+        - proto: all
+          group_name: K8s security group
+
+  - name: Create instances
+    ec2:
+      region: "{{ region_tag }}"
+      key_name: "{{ key }}"
+      instance_type: "{{ flavor }}"
+      image:  "{{ ami }}"
+      wait: yes
+      group: "K8s security group"
+      count: 1
+      vpc_subnet_id: "{{ subnet.subnet.id }}"
+      instance_tags:
+        Name: "{{ name_tag1 }}"
+      volumes:
+      - device_name: /dev/sda1
+        volume_size: 40
+      assign_public_ip: yes
+    register: ec2
+  - name: Add new instances to launched group
+    add_host: hostname={{ item.public_ip }} groupname=launched
+    with_items: "{{ec2.instances}}"
+  - name: Add new instance to master group
+    add_host: hostname={{ ec2.instances.0.public_ip }} groupname=master
+  - name: Wait for SSH to come up
+    wait_for: host={{ item.public_dns_name }} port=22 delay=60 timeout=320 state=started
+    with_items: '{{ec2.instances}}'
+
+  - name: Create instances
+    ec2:
+      region: "{{ region_tag }}"
+      key_name: "{{ key }}"
+      instance_type: "{{ flavor }}"
+      image:  "{{ ami }}"
+      wait: yes
+      group: "K8s security group"
+      count: 1
+      vpc_subnet_id: "{{ subnet.subnet.id }}"
+      instance_tags:
+        Name: "{{ name_tag2 }}"
+      volumes:
+      - device_name: /dev/sda1
+        volume_size: 40
+      assign_public_ip: yes
+    register: ec2
+  - name: Add new instances to launched group
+    add_host: hostname={{ item.public_ip }} groupname=launched
+    with_items: "{{ec2.instances}}"
+  - name: Add new instance to minions group
+    add_host: hostname={{ ec2.instances.0.public_ip }} groupname=minions
+  - name: Wait for SSH to come up
+    wait_for: host={{ item.public_dns_name }} port=22 delay=60 timeout=320 state=started
+    with_items: '{{ec2.instances}}'
+
+- hosts: launched
+  remote_user: ubuntu
+  become: true
+  gather_facts: no
+  pre_tasks:
+    - name: install python2 because Ubuntu has python 3
+      raw: sudo apt-get -y install python-simplejson
+
+  tasks:
+
+    - name: Executing Script to Enable Root Access to Instances
+      script: ./ansible/utils/enable_root_access.sh
+
+- hosts: master
+  remote_user: root
+  become: true
+  tasks:
+
+    - name: Set Username on Master
+      script: ./ansible/utils/set_hostname_master.sh
+
+- hosts: minions
+  remote_user: root
+  become: true
+  tasks:
+
+    - name: Set Username on Node
+      script: ./ansible/utils/set_hostname_node.sh
+
+- hosts: launched
+  remote_user: root
+  become: true
+  gather_facts: no
+
+  tasks:
+
+    - name: Add k8s packages key
+      apt_key: url=https://packages.cloud.google.com/apt/doc/apt-key.gpg state=present
+
+    - name: Add Kubernetes apt list
+      copy: src=./files/kubernetes.list dest=/etc/apt/sources.list.d/kubernetes.list
+
+    - name: Update cache
+      apt: update_cache=yes
+
+    - name: Upgrade
+      apt: upgrade=dist
+
+    - name: Install docker
+      script: ./ansible/utils/install_docker.sh
+
+    - name: Install kubelet
+      apt: name=kubelet state=present
+
+    - name: Install kubectl
+      apt: name=kubectl state=present
+
+    - name: Install kubeadm
+      apt: name=kubeadm state=present
+
+    - name: Install kubernetes-cni
+      apt: name=kubernetes-cni state=present
+
+- hosts: master
+  remote_user: root
+  become: true
+  tasks:
+
+    - name: Install Ansible
+      script: ./ansible/utils/install_ansible.sh
+
+    - name: Executing Scripts to Pull Contrail Packages and Docker Images
+      script: ./ansible/utils/get_contrail_install_pkg.sh
+
+- hosts: localhost
+  remote_user: root
+  become: true
+  tasks:
+
+    - name: Executing Scripts to Populate Hosts File with Node IP
+      script: ./ansible/utils/populate_hosts_minion_IP.sh
+
+- hosts: master
+  remote_user: root
+  become: true
+  tasks:
+
+    - name: Executing Scripts to Populate Hosts File with Master IP
+      script: ./ansible/utils/populate_hosts_master_IP.sh
+
+- hosts: localhost
+  remote_user: root
+  become: true
+  tasks:
+
+    - name: Executing Scripts to Copy Keys for Contrail-Ansible on Master
+      script: ./ansible/utils/copy_ssh_keys.sh
+
+- hosts: master
+  remote_user: root
+  become: true
+  tasks:
+
+    - name: Execute Contrail-Ansible
+      script: ./ansible/utils/execute_contrail_ansible.sh
+
+- hosts: master
+  remote_user: root
+  become: true
+  tasks:
+
+    - name: Disable Network_Args on Master
+      script: ./ansible/utils/disable_cni_master.sh
+
+- hosts: master
+  remote_user: ubuntu
+  become: true
+  tasks:
+
+    - name: Launch kubeadm in master
+      shell: "kubeadm init --apiserver-advertise-address {{ ansible_eth0.ipv4.address }} --skip-preflight-checks |grep 'kubeadm join'"
+      register: output_kubeadm
+
+    - set_fact:
+        kubeadm_cmd: "{{output_kubeadm.stdout}}"
+    - debug: msg="Output {{kubeadm_cmd}}"
+
+- hosts: minions
+  remote_user: ubuntu
+  become: true
+  tasks:
+
+    - set_fact:
+        kubeadm: "{{hostvars[groups['master'][0]].kubeadm_cmd}}"
+    - debug: msg="Output {{kubeadm}}"
+    - name: Join to master
+      command: "{{kubeadm}} --skip-preflight-checks"
+
+- hosts: master
+  remote_user: root
+  become: true
+  tasks:
+
+    - name: Transfer the script to enable Kubectl admin.conf
+      copy: src=./ansible/utils/set_auth_kubeconfig.sh dest=/home/ubuntu mode=0777
+
+    - name: Set admin.conf for Kubectl access
+      command: bash /home/ubuntu/set_auth_kubeconfig.sh
+
+    - name: Enable Insecure port and Insecure bind Address
+      script: ./ansible/utils/enable_insecure_port.sh
+
+    - name: Copy Kubernetes Dashboard YAML
+      copy: src=./ansible/utils/create_K8S_dashboard.sh dest=/root/. mode=0777
+
+    - name: Get Kubernetes Dashboard YAML
+      script: ./ansible/utils/create_K8S_dashboard.sh

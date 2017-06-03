@@ -1,0 +1,14 @@
+- hosts: localhost
+  tasks:
+  - name: Create a new keypair
+    ec2_key:
+      name: contrailK8S-keypair
+      region: us-west-2
+    register: ec2_key
+
+  - name: save private key
+    copy:
+      content: "{{ ec2_key.key.private_key }}"
+      dest: "~/.ssh/contrailK8S-keypair.pem"
+      mode: 0600
+    when: ec2_key.changed
