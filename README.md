@@ -1,5 +1,5 @@
 
-![alt text](http://www.techtaffy.com/wp-content/uploads/2013/09/OpenContrail.png)![alt text](https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/112012/amazon.com_web_services.png?itok=IbCS6QAe)
+![alt text](http://talligent.com/wp-content/uploads/2015/10/Screen-Shot-2015-12-01-at-9.17.50-PM.png)![alt text](https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/112012/amazon.com_web_services.png?itok=IbCS6QAe)
 
 # Contrail_Kubernetes_AWS_Ansible-Boto
 Contrail CNI-Kubernetes with Containarized Control Plane on AWS
