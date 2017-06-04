@@ -74,7 +74,26 @@ The solution is organized in 3 parts:
     a. Select “My Security Credentials”
     
        ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws9.png)
+       
+    b. Select “Access Keys (Access Key ID and Secret Access Key)”
     
-
+       ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws10.png)
+       
+    c. Select “Create New Access Key” and choose “Download File”
     
+       ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws11.png)
 
+11. In the Build-Host instance created above use  “aws configure” to configure the access details. The CLI will prompt the         user to provide the keys one by one.
+
+    ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws12.png)
+       
+    Provide the credentials from the csv file downloaded above and select “us-west-2” as the default region
+
+12. Enter the directory and run:
+
+    ```
+    ./ create_key_pair.sh      #Creates a Key_Pair required by ansible initially to login
+    ./create_cluster.sh        #Triggers the ansible tasks to create the cluster
+    
+    ```
+13. Once the ansible completes the provisioning the user can see a “contrail-K8S-Master” and “contrail-K8S-Node” on the EC2       dashboard with Kubernetes-Master and Node installed with Flannel networking. User can enter the terminal using the             public_ip “root@<public_ip>”. Refer step.8 for the details on getting the public_ip.
