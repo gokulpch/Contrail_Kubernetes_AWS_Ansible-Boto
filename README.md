@@ -35,4 +35,8 @@ The solution is organized in 3 parts:
 
 1. Download the CloudFormation template from the location below to the local machine
 
-   wget https://raw.githubusercontent.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/master/CFormation-BHost-K8S-      Flannel.yaml#
+   wget https://raw.githubusercontent.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/master/CFormation-BHost-K8S-Flannel.yaml#
+
+2. Select CloudFormation service from AWS web portal 
+
+
