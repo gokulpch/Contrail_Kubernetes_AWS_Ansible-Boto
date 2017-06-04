@@ -30,3 +30,9 @@ The solution is organized in 3 parts:
 
 2.	Once the build-host is available, user should provide their respective AWS credentials using awscli. Detailed procedure is furnished below in the document.
 3.  The ansible framework on the host triggers required tasks to provision the cluster on AWS.
+
+## Usage
+
+1. Download the CloudFormation template from the location below to the local machine
+
+   wget https://raw.githubusercontent.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/master/CFormation-BHost-K8S-      Flannel.yaml#
