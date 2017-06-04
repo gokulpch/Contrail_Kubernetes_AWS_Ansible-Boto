@@ -39,4 +39,5 @@ The solution is organized in 3 parts:
 
 2. Select CloudFormation service from AWS web portal 
 
+![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws1.png)
 
