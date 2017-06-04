@@ -41,3 +41,40 @@ The solution is organized in 3 parts:
 
     ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws1.png)
 
+3. Select “Create Stack” Option
+ 
+    ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws2.png)
+    
+4. Select Upload a template and choose the file downloaded above
+ 
+    ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws3.png)
+    
+5. Provide a “Stack Name” and select any existing “KeyPair” (the template enable root access where there is no need of any key    to login once the instance is available) and select “Next”
+
+    ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws4.png)
+    
+6. As we are not enabling any IAM access or select “Next” and “Create” in the review page to initiate the stack.
+
+    ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws5.png)
+    
+    ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws6.png)
+
+7. Watch for the stack to complete
+
+    ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws7.png)
+     
+8. Once the stack creation is complete then proceed to the EC2 (from “services” and select the “running instances”)dashboard      to get the public_ip of the instance. Select the instance with the name that have been provided in step.5 and you can get      the public_ip as shown below.
+
+    ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws8.png)
+    
+9. Use “root@<public_ip>”, “Password: contrail1” to access the instance from the local terminal and you should see directory      named “Kubernetes_AWS_Flannel_Ansible-BOTO” in “/root”
+
+10. Get the access key and secret from AWS portal. Instructions are mentioned below:
+
+    a. Select “My Security Credentials”
+    
+       ![alt text](https://github.com/gokulpch/Contrail_Kubernetes_AWS_Ansible-Boto/blob/master/img/aws9.png)
+    
+
+    
+
