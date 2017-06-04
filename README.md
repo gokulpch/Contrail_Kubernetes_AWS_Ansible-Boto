@@ -13,12 +13,12 @@ The solution is organized in 3 parts:
 
 ### Prerequisites
 
-•	ansible 
-•	awscli
-•	python-pip
-•	boto
-•	AWS account which can allow users to use Large and Medium EC2 instances (Usually not available in free-tier)
-•	AWS account access and secret keys
+*	ansible 
+*	awscli
+*	python-pip
+*	boto
+*	AWS account which can allow users to use Large and Medium EC2 instances (Usually not available in free-tier)
+*	AWS account access and secret keys
 
 ### Procedure
 
