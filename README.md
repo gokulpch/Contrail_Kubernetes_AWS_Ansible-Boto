@@ -98,10 +98,10 @@ The solution is organized in 3 parts:
     ```
 13. Once the ansible completes the provisioning the user can see a “contrail-K8S-Master” and “contrail-K8S-Node” on the EC2       dashboard with Kubernetes-Master and Node installed with Flannel networking. User can enter the terminal using the             public_ip “root@<public_ip>” "password: contrail1". Refer step.8 for the details on getting the public_ip.
 
-#### Authors
-
-* **Gokul Chandra** - *Initial work* - [PurpleBooth](https://github.com/gokulpch)
-
 #### License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the **MIT** License - see the [LICENSE.md](LICENSE.md) file for details
+
+#### Authors
+
+* **Gokul Chandra** - *Initial work* - (https://github.com/gokulpch)
