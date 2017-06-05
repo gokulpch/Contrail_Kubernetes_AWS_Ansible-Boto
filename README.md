@@ -129,11 +129,11 @@ The solution is organized in 3 parts:
 
 15. To access the Contrail Web-UI **"https://<public_ip_contrail-K8S-Master>:8143"**, Credentials:admin/contrail123
 
-    ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-13.png)
+    ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-Contrail-UI.png)
 
 16. To access the Kubernetes Web-UI **"http://<public_ip_contrail-K8S-Node>:9090"**, no credentials needed
 
-    ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-14.png)
+    ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-K8S-UI.png)
 
 #### License
 
