@@ -38,7 +38,7 @@ The solution is organized in 3 parts:
 
 1. Download the CloudFormation template from the location below to the local machine
 
-   wget https://raw.githubusercontent.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/master/CFormation-BHost-K8S-Flannel.yaml#
+   wget https://raw.githubusercontent.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/master/CFormation-BHost-K8S-Contrail.json#
 
 2. Select CloudFormation service from AWS web portal 
 
@@ -52,7 +52,7 @@ The solution is organized in 3 parts:
  
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws3.png)
     
-5. Provide a “Stack Name” and select any existing “KeyPair” (the template enable root access where there is no need of any key    to login once the instance is available) and select “Next”
+5. Provide a “Stack Name” and “KeyPair” is optional (the template enable root access where there is no need of any key    to login once the instance is available) and select “Next”
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws4.png)
     
