@@ -117,11 +117,23 @@ The solution is organized in 3 parts:
 12. Enter the directory and run:
 
     ```
-     ./ **create_key_pair.sh**      #Creates a Key_Pair required by ansible initially to login
-     ./ **create_cluster.sh**       #Triggers the ansible tasks to create the cluster
+     ./create_key_pair.sh      #Creates a Key_Pair required by ansible initially to login
+     ./create_cluster.sh       #Triggers the ansible tasks to create the cluster
     
     ```
-13. Once the ansible completes the provisioning the user can see a “contrail-K8S-Master” and “contrail-K8S-Node” on the EC2       dashboard with Kubernetes-Master and Node installed with Flannel networking. User can enter the terminal using the             public_ip “root@<public_ip>” "password: contrail1". Refer step.8 for the details on getting the public_ip.
+13. Once Ansible completes the provisioning user can see **“contrail-K8S-Master”** and **“contrail-K8S-Node”** on the EC2         dashboard with Contrail, Kubernetes-Master and Node installed.
+
+    ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-15.png)
+
+14. User can enter the terminal (master and node) using the   public_ip **“root@<public_ip>”** **"password: contrail1"**.         Refer step.8 for the details on getting the public_ip.
+
+15. To access the Contrail Web-UI **"https://<public_ip_contrail-K8S-Master>:8143"**, Credentials:admin/contrail123
+
+    ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-13.png)
+
+16. To access the Kubernetes Web-UI **"http://<public_ip_contrail-K8S-Node>:9090"**, no credentials needed
+
+    ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-14.png)
 
 #### License
 
