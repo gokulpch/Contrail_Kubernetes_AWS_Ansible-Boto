@@ -3,7 +3,7 @@ Contrail CNI-Kubernetes with Containarized Control Plane on AWS
 
 ![alt text](http://talligent.com/wp-content/uploads/2015/10/Screen-Shot-2015-12-01-at-9.17.50-PM.png)![alt text](https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/112012/amazon.com_web_services.png?itok=IbCS6QAe)![alt text](https://www.cncf.io/wp-content/uploads/sites/2/2017/05/logo_kubernetes.png)
 
-Opencontrail will add additional functionality to Kubernetes with additional functionalities such as multi-tenancy, network isolation, micro-segmentation with network policies, load-balancing etc.
+Opencontrail will add network functionality to Kubernetes with additional functionalities such as multi-tenancy, network isolation, micro-segmentation with network policies, load-balancing etc.
 
 Opencontrail maps the following k8s concepts into opencontrail resources:
 
@@ -92,7 +92,7 @@ The solution is organized in 3 parts:
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws8.png)
     
-9. Use “root@<public_ip>”, “Password: contrail1” to access the instance from the local terminal and you should see directory      named “Kubernetes_AWS_Flannel_Ansible-BOTO” in “/root”
+9. Use “root@<public_ip>”, “Password: contrail1” to access the instance from the local terminal and you should see directory      named “Contrail_Kubernetes_AWS_Ansible-Boto” in “/root”
 
 10. Get the access key and secret from AWS portal. Instructions are mentioned below:
 
@@ -108,17 +108,17 @@ The solution is organized in 3 parts:
     
        ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws11.png)
 
-11. In the Build-Host instance created above use  “aws configure” to configure the access details. The CLI will prompt the         user to provide the keys one by one.
+11. In the Build-Host instance created above use  **“aws configure”** to configure the access details. The CLI will prompt the         user to provide the keys one by one.
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws12.png)
        
-    Provide the credentials from the csv file downloaded above and select “us-west-2” as the default region
+    Provide the credentials from the csv file downloaded above and select **“us-west-2”** as the default region
 
 12. Enter the directory and run:
 
     ```
-     ./ create_key_pair.sh      #Creates a Key_Pair required by ansible initially to login
-     ./ create_cluster.sh       #Triggers the ansible tasks to create the cluster
+     ./ **create_key_pair.sh**      #Creates a Key_Pair required by ansible initially to login
+     ./ **create_cluster.sh**       #Triggers the ansible tasks to create the cluster
     
     ```
 13. Once the ansible completes the provisioning the user can see a “contrail-K8S-Master” and “contrail-K8S-Node” on the EC2       dashboard with Kubernetes-Master and Node installed with Flannel networking. User can enter the terminal using the             public_ip “root@<public_ip>” "password: contrail1". Refer step.8 for the details on getting the public_ip.
