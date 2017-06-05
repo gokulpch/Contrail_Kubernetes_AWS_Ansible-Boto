@@ -1,8 +1,30 @@
+# Contrail_Kubernetes_AWS_Ansible-Boto
+Contrail CNI-Kubernetes with Containarized Control Plane on AWS
 
 ![alt text](http://talligent.com/wp-content/uploads/2015/10/Screen-Shot-2015-12-01-at-9.17.50-PM.png)![alt text](https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/112012/amazon.com_web_services.png?itok=IbCS6QAe)![alt text](https://www.cncf.io/wp-content/uploads/sites/2/2017/05/logo_kubernetes.png)
 
-# Contrail_Kubernetes_AWS_Ansible-Boto
-Contrail CNI-Kubernetes with Containarized Control Plane on AWS
+Opencontrail will add additional functionality to Kubernetes with additional functionalities such as multi-tenancy, network isolation, micro-segmentation with network policies, load-balancing etc.
+
+Opencontrail maps the following k8s concepts into opencontrail resources:
+
+   * Namespace:	Shared or single project based on configuration
+   * Pod:	Virtual-machine, Interface, Instance-ip
+   * Service:	ECMP based native Loadbalancer
+   * Ingress:	Haproxy based L7 Loadbalancer for URL routing
+   * Network Policy:	Security group based on namespace and pod selectors
+
+Opencontrail can be configured in the following mode in a K8s cluster:
+
+   * Default
+   * Namespace isolation (with or without service isolation)
+   * Custom (define network for a pod, namespace)
+   * Nested (k8s cluster in openstack virtual-machines
+   
+Beta:
+
+   * Contrail-Helm
+   * Single YAML install (similar to all other opensource CNI deployment)
+   * These enable easy integration of contrail with other deployment frameworks such as KOPS, HEPTIO etc.
 
 ## Provisioning Contrail with Kubernetes using Ansible & Python-Boto on Amazon Web Services
 
@@ -10,9 +32,9 @@ Ansible’s EC2 module uses python-boto library to call AWS API, and boto needs 
 
 The solution is organized in 3 parts:
 
-* A generic Ansible role that uses ec2 module to provision
-* Yaml files with variables that will be used as parameters for each type of EC2 host
-* Playbook that combines the variables file with the role
+   * A generic Ansible role that uses ec2 module to provision
+   * Yaml files with variables that will be used as parameters for each type of EC2 host
+   * Playbook that combines the variables file with the role
 
 ## Prerequisites
 
