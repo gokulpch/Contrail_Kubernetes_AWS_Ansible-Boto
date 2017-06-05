@@ -20,6 +20,8 @@
         Name: contrailk8s-vpc
       region: "{{ region_tag }}"
       internet_gateway: True
+      tags:
+        - vpc
       subnets:
         - cidr: "{{ subnet_cidr }}"
           az: "{{ availability_zone }}"
@@ -44,6 +46,8 @@
       vpc_id: "{{ vpc.vpc_id }}"
       cidr: "{{ subnet_cidr }}"
       region: "{{ region_tag }}"
+      tags:
+        - subnet
       resource_tags:
         Name: contrailk8s-subnet
     register: subnet
@@ -57,6 +61,8 @@
       description: It allows ports 22, 80,8080 and 443 in and 80 and 443 out
       vpc_id: "{{vpc.vpc_id}}"
       region: "{{ region_tag }}"
+      tags:
+        - securitygroup
       rules:
         - proto: tcp
           from_port: 0
@@ -100,6 +106,8 @@
       vpc_subnet_id: "{{ subnet.subnet.id }}"
       instance_tags:
         Name: "{{ name_tag1 }}"
+      tags:
+        - masterec2
       volumes:
       - device_name: /dev/sda1
         volume_size: 40
@@ -126,6 +134,8 @@
       vpc_subnet_id: "{{ subnet.subnet.id }}"
       instance_tags:
         Name: "{{ name_tag2 }}"
+      tags:
+        - minionec2
       volumes:
       - device_name: /dev/sda1
         volume_size: 40
@@ -152,22 +162,25 @@
 
     - name: Executing Script to Enable Root Access to Instances
       script: ./utils/enable_root_access.sh
+      tags: enableroot
 
 - hosts: master
   remote_user: root
   become: true
   tasks:
 
-    - name: Set Username on Master
+    - name: Set Hostname on Master
       script: ./utils/set_hostname_master.sh
+      tags: hnamemaster
 
 - hosts: minions
   remote_user: root
   become: true
   tasks:
 
-    - name: Set Username on Node
+    - name: Set Hostname on Node
       script: ./utils/set_hostname_node.sh
+      tags: hnamemaster
 
 - hosts: launched
   remote_user: root
@@ -178,30 +191,39 @@
 
     - name: Add k8s packages key
       apt_key: url=https://packages.cloud.google.com/apt/doc/apt-key.gpg state=present
+      tags: k8spackages
 
     - name: Add Kubernetes apt list
       copy: src=./files/kubernetes.list dest=/etc/apt/sources.list.d/kubernetes.list
+      tags: aptlist
 
     - name: Update cache
       apt: update_cache=yes
+      tags: cache
 
     - name: Upgrade
       apt: upgrade=dist
+      tags: upgrade
 
     - name: Install docker
       script: ./utils/install_docker.sh
+      tags: installdocker
 
     - name: Install kubelet
       apt: name=kubelet state=present
+      tags: installkubelet
 
     - name: Install kubectl
       apt: name=kubectl state=present
+      tags: installkubectl
 
     - name: Install kubeadm
       apt: name=kubeadm state=present
+      tags: installkubeadm
 
     - name: Install kubernetes-cni
       apt: name=kubernetes-cni state=present
+      tags: installkubecni
 
 - hosts: master
   remote_user: root
@@ -210,9 +232,11 @@
 
     - name: Install Ansible
       script: ./utils/install_ansible.sh
+      tags: installansible
 
     - name: Executing Scripts to Pull Contrail Packages and Docker Images
       script: ./utils/get_contrail_install_pkg.sh
+      tags: getcontrailpkg
 
 - hosts: localhost
   remote_user: root
@@ -221,6 +245,7 @@
 
     - name: Executing Scripts to Populate Hosts File with Node IP
       script: ./utils/populate_hosts_minion_IP.sh
+      tags: nodehosts
 
 - hosts: master
   remote_user: root
@@ -229,6 +254,7 @@
 
     - name: Executing Scripts to Populate Hosts File with Master IP
       script: ./utils/populate_hosts_master_IP.sh
+      tags: masterhosts
 
 - hosts: localhost
   remote_user: root
@@ -237,6 +263,7 @@
 
     - name: Executing Scripts to Copy Keys for Contrail-Ansible on Master
       script: ./utils/copy_ssh_keys.sh
+      tags: copykeys
 
 - hosts: master
   remote_user: root
@@ -245,6 +272,7 @@
 
     - name: Execute Contrail-Ansible
       script: ./utils/execute_contrail_ansible.sh
+      tags: execcontrailansible
 
 - hosts: master
   remote_user: root
@@ -253,6 +281,7 @@
 
     - name: Disable Network_Args on Master
       script: ./utils/disable_cni_master.sh
+      tags: disablecni
 
 - hosts: master
   remote_user: ubuntu
@@ -261,6 +290,7 @@
 
     - name: Launch kubeadm in master
       shell: "kubeadm init --apiserver-advertise-address {{ ansible_eth0.ipv4.address }} --skip-preflight-checks |grep 'kubeadm join'"
+      tags: initmaster
       register: output_kubeadm
 
     - set_fact:
@@ -277,6 +307,7 @@
     - debug: msg="Output {{kubeadm}}"
     - name: Join to master
       command: "{{kubeadm}} --skip-preflight-checks"
+      tags: initmaster
 
 - hosts: master
   remote_user: root
@@ -285,15 +316,20 @@
 
     - name: Transfer the script to enable Kubectl admin.conf
       copy: src=./utils/set_auth_kubeconfig.sh dest=/home/ubuntu mode=0777
+      tags: setadminconf
 
     - name: Set admin.conf for Kubectl access
       command: bash /home/ubuntu/set_auth_kubeconfig.sh
+      tags: setadminconf
 
     - name: Enable Insecure port and Insecure bind Address
       script: ./utils/enable_insecure_port.sh
+      tags: enableinsecureport
 
     - name: Copy Kubernetes Dashboard YAML
       copy: src=./utils/create_K8S_dashboard.sh dest=/root/. mode=0777
+      tags: dashboard
 
     - name: Get Kubernetes Dashboard YAML
       script: ./utils/create_K8S_dashboard.sh
+      tags: dashboard
