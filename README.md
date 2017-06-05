@@ -135,6 +135,17 @@ The solution is organized in 3 parts:
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-K8S-UI.png)
 
+### Ansible - Specific Usage
+
+a.  Just run the “upgrade” and “installdocker” part of the playbook
+
+```ansible-playbook example.yml --tags "configuration,packages"```
+
+b. Run a playbook without certain tasks
+
+```ansible-playbook example.yml --skip-tags "notification"```
+
+
 #### License
 
 This project is licensed under the **MIT** License - see the [LICENSE.md](LICENSE.md) file for details
