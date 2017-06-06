@@ -330,6 +330,6 @@
       copy: src=./utils/create_K8S_dashboard.sh dest=/root/. mode=0777
       tags: dashboard
 
-    - name: Get Kubernetes Dashboard YAML
+    - name: Create Dashboard Pod
       script: ./utils/create_K8S_dashboard.sh
       tags: dashboard
