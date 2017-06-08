@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# docker run --rm -t -i -v $(pwd)/.awscreds:/root/.aws alexturek/aws-cli-docker configure
-
-alias aws="docker run --rm -t -i -v $(pwd)/.awscreds:/root/.aws alexturek/aws-cli-docker"
-
 # vpc name
 name=contrailk8s-vpc
 
