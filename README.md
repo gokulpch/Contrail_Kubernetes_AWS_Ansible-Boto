@@ -150,9 +150,11 @@ The solution is organized in 3 parts:
     
       ```
 
-### Ansible - Specific Usage
+### Ansible - Specific Usage (not a part of regular install)
 
-a.  Just run the “upgrade” and “installdocker” part of the playbook
+In case of script failures, users can start, exclude/include tasks:
+
+a.  To run specifc tasks example : “upgrade” and “installdocker” part of the playbook
 
 ```ansible-playbook example.yml --tags "configuration,packages"```
 
