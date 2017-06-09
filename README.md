@@ -82,7 +82,7 @@ The solution is organized in 3 parts:
  
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws3.png)
     
-6. Provide a “Stack Name” and “KeyPair” is optional (the template enable root access where there is no need of any key    to login once the instance is available) and select “Next”
+6. Provide a “Stack Name”
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-17.png)
     
