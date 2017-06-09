@@ -139,6 +139,13 @@ The solution is organized in 3 parts:
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-K8S-UI.png)
 
+17. To Delete all the components on AWS (VPC, IGW, Subnets, EC2 etc.) use delete_cluster in **“Kubernetes_AWS_Flannel_Ansible-BOTO”** directory, run:
+
+      ```
+         ./ delete_cluster.sh      #Deletes the cluster
+    
+      ```
+
 ### Ansible - Specific Usage
 
 a.  Just run the “upgrade” and “installdocker” part of the playbook
@@ -148,6 +155,8 @@ a.  Just run the “upgrade” and “installdocker” part of the playbook
 b. Run a playbook without certain tasks
 
 ```ansible-playbook example.yml --skip-tags "notification"```
+
+##Demo Video
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/KL0E4SaRCs0/0.jpg)](https://youtu.be/KL0E4SaRCs0)
 
