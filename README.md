@@ -166,7 +166,7 @@ b. Run a playbook without certain tasks
 
 Clone the following repository to the Desktop if using the Kubernetes Dashboard to upload the YAML file. If users are using CLI these are pre-packaged and available on Master
 
-            git clone https://github.com/gokulpch/Contrail_Kubernetes_Demo_Yaml
+git clone https://github.com/gokulpch/Contrail_Kubernetes_Demo_Yaml
 
 ## Demo Video
 
