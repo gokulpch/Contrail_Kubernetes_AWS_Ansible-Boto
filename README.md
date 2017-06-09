@@ -149,7 +149,7 @@ b. Run a playbook without certain tasks
 
 ```ansible-playbook example.yml --skip-tags "notification"```
 
-[linkname](https://youtu.be/KL0E4SaRCs0)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/KL0E4SaRCs0/0.jpg)](https://youtu.be/KL0E4SaRCs0)
 
 #### License
 
