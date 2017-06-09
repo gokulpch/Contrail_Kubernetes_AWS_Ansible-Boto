@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: contrail-frontend-svc
+spec:
+  selector:
+    app: contrail-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

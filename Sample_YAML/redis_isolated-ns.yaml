@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-app-isolated
+  namespace: isolated-ns
+  labels:
+    app: redis-app-isolated
+spec:
+  containers:
+    - name: redis-app-isolated
+      image: ubuntu-upstart

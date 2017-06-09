@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: NetworkPolicy
+metadata:
+ name: contrail-policy
+ namespace: policy-namespace
+spec:
+ podSelector:
+  matchLabels:
+    app: mysql-app
+ ingress:
+  - from:
+     - podSelector:
+        matchLabels:
+         app: mongo-app
+    ports:
