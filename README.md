@@ -3,7 +3,7 @@ Contrail CNI-Kubernetes with Containarized Control Plane on AWS
 
 <p align="center">
   <br><br>
-  <img src="http://s.4cdn.org/image/title/105.gif">
+  <img src="http://talligent.com/wp-content/uploads/2015/10/Screen-Shot-2015-12-01-at-9.17.50-PM.png">
 </p>
 ![Alt](http://talligent.com/wp-content/uploads/2015/10/Screen-Shot-2015-12-01-at-9.17.50-PM.png)
 ![Alt](https://www.cncf.io/wp-content/uploads/sites/2/2017/05/logo_kubernetes.png) ![Alt](http://docs.aws.amazon.com/cli/latest/_static/logo.png)                     
