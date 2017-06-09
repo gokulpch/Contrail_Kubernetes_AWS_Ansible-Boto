@@ -3,11 +3,11 @@ Contrail CNI-Kubernetes with Containarized Control Plane on AWS
 
 <p align="center">
   <br><br>
-  <img src="http://talligent.com/wp-content/uploads/2015/10/Screen-Shot-2015-12-01-at-9.17.50-PM.png">
+  <img src="http://www.juniper.net/assets/img/dm/interoptokyo2016/opencontrail.png">
   <img src="https://raw.githubusercontent.com/kubernetes/kops/master/docs/img/k8s-aws.png">
 </p>
                 
-Opencontrail will add network functionality to Kubernetes with additional functionalities such as multi-tenancy, network isolation, micro-segmentation with network policies, load-balancing etc.
+Opencontrail adds network functionality to Kubernetes with additional functionalities such as multi-tenancy, network isolation, micro-segmentation with network policies, load-balancing etc.
 
 Opencontrail maps the following k8s concepts into opencontrail resources:
 
