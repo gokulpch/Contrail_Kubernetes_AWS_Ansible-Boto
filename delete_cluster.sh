@@ -33,10 +33,10 @@ echo "terminate all instances in your VPC"
 aws ec2 describe-instances --filters "Name=tag:Name,Values=contrail-K8S-Master" | grep InstanceId | cut -d':' -f2 | tr -d '",' | xargs -I '{}' aws ec2 terminate-instances --instance-ids '{}'
 aws ec2 describe-instances --filters "Name=tag:Name,Values=contrail-K8S-Minion" | grep InstanceId | cut -d':' -f2 | tr -d '",' | xargs -I '{}' aws ec2 terminate-instances --instance-ids '{}'
 
-echo "Waiting for the instances to Terminate................................"
+echo "*********..........Deleting Master Instance...........*************"
 sleep 80
 
-echo "delete all ENI's associated with subnets within your VPC"
+echo "*********..........Deleting Minion Instance...........*************"
 eni_ids=$(aws ec2 describe-network-interfaces --filters $filter --output text --query "NetworkInterfaces[].NetworkInterfaceId")
 
 for eni in ${eni_ids}; do
@@ -44,7 +44,7 @@ for eni in ${eni_ids}; do
   aws ec2 delete-network-interface --network-interface-id $eni
 done
 
-echo "disassociate all route tables from all the subnets in your VPC"
+echo "*********..........Waiting for the instances to Terminate...........***********"
 association_ids=$(aws ec2 describe-route-tables --filters $filter --output text --query "RouteTables[].Associations[].RouteTableAssociationId")
 
 for association in ${association_ids}; do
@@ -52,7 +52,7 @@ for association in ${association_ids}; do
   aws ec2 disassociate-route-table --association-id $association > /dev/null 2>&1
 done
 
-echo "delete all route tables other than the 'Main' table"
+echo "*********..........Delete all ENI's associated with subnets within your VPC...........***********"
 route_table_ids=$(aws ec2 describe-route-tables --filters $filter --output text --query "RouteTables[].RouteTableId")
 
 for route_table in ${route_table_ids}; do
