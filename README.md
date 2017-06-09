@@ -162,6 +162,12 @@ b. Run a playbook without certain tasks
 
 ```ansible-playbook example.yml --skip-tags "notification"```
 
+### For Sample_YAML files and some Click_Through Scripts
+
+Clone the following repository to the Desktop if using the Kubernetes Dashboard to upload the YAML file. If users are using CLI these are pre-packaged and available on Master
+
+      ```git clone https://github.com/gokulpch/Contrail_Kubernetes_Demo_Yaml```
+
 ## Demo Video
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/KL0E4SaRCs0/0.jpg)](https://youtu.be/KL0E4SaRCs0)
