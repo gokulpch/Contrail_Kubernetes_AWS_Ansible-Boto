@@ -30,7 +30,7 @@ Beta:
    * Single YAML install (similar to all other opensource CNI deployment)
    * These enable easy integration of contrail with other deployment frameworks such as KOPS, HEPTIO etc.
 
-## Provisioning Contrail with Kubernetes using Ansible & Python-Boto on Amazon Web Services
+## _Provisioning Contrail with Kubernetes using Ansible & Python-Boto on Amazon Web Services_
 
 Ansible’s EC2 module uses python-boto library to call AWS API, and boto needs AWS credentials in order to function.
 
@@ -40,7 +40,7 @@ The solution is organized in 3 parts:
    * Yaml files with variables that will be used as parameters for each type of EC2 host
    * Playbook that combines the variables file with the role
 
-## Prerequisites
+## _Prerequisites_
 
 * ansible 
 * awscli
@@ -49,7 +49,7 @@ The solution is organized in 3 parts:
 * AWS account which can allow users to use Large and Medium EC2 instances (Usually not available in free-tier)
 * AWS account access and secret keys
 
-## Procedure
+## _Procedure_
 
 1.  A CloudFormation template is used to create a build-host which has all the packages required as specified above (ansible, awcli, python-pip and boto), this includes the repo with ansible-framework required to provision the cluster.
 
@@ -60,7 +60,7 @@ The solution is organized in 3 parts:
 2.  Once the build-host is available, user should provide their respective AWS credentials using awscli. Detailed procedure is furnished below in the document.
 3.  The ansible framework on the host triggers required tasks to provision the cluster on AWS.
 
-## Usage
+## _Usage_
 
 1. Choose the Region from AWS web portal. For consistency and mapping of AMI's used in the template select **US-West(Oregon)**
 
@@ -150,7 +150,7 @@ The solution is organized in 3 parts:
     
       ```
 
-### Ansible - Specific Usage (not a part of regular install)
+### _Ansible - Specific Usage (not a part of regular install)_
 
 In case of script failures, users can start, exclude/include tasks:
 
@@ -162,13 +162,13 @@ b. Run a playbook without certain tasks
 
 ```ansible-playbook example.yml --skip-tags "notification"```
 
-### For Sample_YAML files and some Click_Through Scripts
+### _For Sample_YAML files and some Click_Through Scripts_
 
 Clone the following repository to the Desktop if using the Kubernetes Dashboard to upload the YAML file. If users are using CLI these are pre-packaged and available on Master
 
 git clone https://github.com/gokulpch/Contrail_Kubernetes_Demo_Yaml
 
-## Demo Video
+## _Demo Video_
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/KL0E4SaRCs0/0.jpg)](https://youtu.be/KL0E4SaRCs0)
 
