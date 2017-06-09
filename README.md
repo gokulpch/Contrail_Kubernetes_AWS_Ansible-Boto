@@ -1,9 +1,7 @@
 # Contrail_Kubernetes_AWS_Ansible-Boto
 Contrail CNI-Kubernetes with Containarized Control Plane on AWS
 
-![Alt](http://talligent.com/wp-content/uploads/2015/10/Screen-Shot-2015-12-01-at-9.17.50-PM.png#center)
-![Alt](https://www.cncf.io/wp-content/uploads/sites/2/2017/05/logo_kubernetes.png#right) 
-![Alt](http://docs.aws.amazon.com/cli/latest/_static/logo.png#left)                     
+![Alt](http://talligent.com/wp-content/uploads/2015/10/Screen-Shot-2015-12-01-at-9.17.50-PM.png#center)![Alt](https://www.cncf.io/wp-content/uploads/sites/2/2017/05/logo_kubernetes.png#right) ![Alt](http://docs.aws.amazon.com/cli/latest/_static/logo.png#left)                     
 
 Opencontrail will add network functionality to Kubernetes with additional functionalities such as multi-tenancy, network isolation, micro-segmentation with network policies, load-balancing etc.
 
