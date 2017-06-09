@@ -62,43 +62,47 @@ The solution is organized in 3 parts:
 
 ## Usage
 
-1. Download the CloudFormation template from the location below to the local machine
+1. Choose the Region from AWS web portal. For consistency and mapping of AMI's used in the template select **US-West(Oregon)**
+
+    ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-16.png)
+
+2. Download the CloudFormation template from the location below to the local machine
 
    wget https://raw.githubusercontent.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/master/CFormation-BHost-K8S-Contrail.json#
 
-2. Select CloudFormation service from AWS web portal 
+3. Select CloudFormation service from AWS web portal 
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws1.png)
 
-3. Select “Create Stack” Option
+4. Select “Create Stack” Option
  
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws2.png)
     
-4. Select Upload a template and choose the file downloaded above
+5. Select Upload a template and choose the file downloaded above
  
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws3.png)
     
-5. Provide a “Stack Name” and “KeyPair” is optional (the template enable root access where there is no need of any key    to login once the instance is available) and select “Next”
+6. Provide a “Stack Name” and “KeyPair” is optional (the template enable root access where there is no need of any key    to login once the instance is available) and select “Next”
 
-    ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws4.png)
+    ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-17.png)
     
-6. As we are not enabling any IAM access or select “Next” and “Create” in the review page to initiate the stack.
+7. As we are not enabling any IAM access or select “Next” and “Create” in the review page to initiate the stack.
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws5.png)
     
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws6.png)
 
-7. Watch for the stack to complete
+8. Watch for the stack to complete
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws7.png)
      
-8. Once the stack creation is complete then proceed to the EC2 (from “services” and select the “running instances”)dashboard      to get the public_ip of the instance. Select the instance with the name that have been provided in step.5 and you can get      the public_ip as shown below.
+9. Once the stack creation is complete then proceed to the EC2 (from “services” and select the “running instances”)dashboard      to get the public_ip of the instance. Select the instance with the name that have been provided in step.5 and you can get      the public_ip as shown below.
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws8.png)
     
-9. Use “root@<public_ip>”, “Password: contrail1” to access the instance from the local terminal and you should see directory      named “Contrail_Kubernetes_AWS_Ansible-Boto” in “/root”
+10. Use “root@<public_ip>”, “Password: contrail1” to access the instance from the local terminal and you should see directory      named “Contrail_Kubernetes_AWS_Ansible-Boto” in “/root”
 
-10. Get the access key and secret from AWS portal. Instructions are mentioned below:
+11. Get the access key and secret from AWS portal. Instructions are mentioned below:
 
     a. Select “My Security Credentials”
     
@@ -112,34 +116,34 @@ The solution is organized in 3 parts:
     
        ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws11.png)
 
-11. In the Build-Host instance created above use  **“aws configure”** to configure the access details. The CLI will prompt the         user to provide the keys one by one.
+12. In the Build-Host instance created above use  **“aws configure”** to configure the access details. The CLI will prompt the         user to provide the keys one by one.
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws12.png)
        
     Provide the credentials from the csv file downloaded above and select **“us-west-2”** as the default region
 
-12. Enter the directory and run:
+13. Enter the directory and run:
 
     ```
      ./create_key_pair.sh      #Creates a Key_Pair required by ansible initially to login
      ./create_cluster.sh       #Triggers the ansible tasks to create the cluster
     
     ```
-13. Once Ansible completes the provisioning user can see **“contrail-K8S-Master”** and **“contrail-K8S-Node”** on the EC2         dashboard with Contrail, Kubernetes-Master and Node installed.
+14. Once Ansible completes the provisioning user can see **“contrail-K8S-Master”** and **“contrail-K8S-Node”** on the EC2         dashboard with Contrail, Kubernetes-Master and Node installed.
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-15.png)
 
-14. User can enter the terminal (master and node) using the   public_ip **“root@<public_ip>”** **"password: contrail1"**.         Refer step.8 for the details on getting the public_ip.
+15. User can enter the terminal (master and node) using the   public_ip **“root@<public_ip>”** **"password: contrail1"**.         Refer step.8 for the details on getting the public_ip.
 
-15. To access the Contrail Web-UI **"https://<public_ip_contrail-K8S-Master>:8143"**, Credentials:admin/contrail123
+16. To access the Contrail Web-UI **"https://<public_ip_contrail-K8S-Master>:8143"**, Credentials:admin/contrail123
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-Contrail-UI.png)
 
-16. To access the Kubernetes Web-UI **"http://<public_ip_contrail-K8S-Node>:9090"**, no credentials needed
+17. To access the Kubernetes Web-UI **"http://<public_ip_contrail-K8S-Node>:9090"**, no credentials needed
 
     ![alt text](https://github.com/gokulpch/Ansible_Base_Hosts_CloudFormation-Templates/blob/master/img/aws-K8S-UI.png)
 
-17. To Delete all the components on AWS (VPC, IGW, Subnets, EC2 etc.) use delete_cluster in **“Kubernetes_AWS_Flannel_Ansible-BOTO”** directory, run:
+18. To Delete all the components on AWS (VPC, IGW, Subnets, EC2 etc.) use delete_cluster in **“Kubernetes_AWS_Flannel_Ansible-BOTO”** directory, run:
 
       ```
          ./ delete_cluster.sh      #Deletes the cluster
@@ -156,7 +160,7 @@ b. Run a playbook without certain tasks
 
 ```ansible-playbook example.yml --skip-tags "notification"```
 
-##Demo Video
+## Demo Video
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/KL0E4SaRCs0/0.jpg)](https://youtu.be/KL0E4SaRCs0)
 
@@ -166,4 +170,4 @@ This project is licensed under the **MIT** License - see the [LICENSE.md](LICENS
 
 #### Authors
 
-* **Gokul Chandra** - *Initial work* - (https://github.com/gokulpch)
+* **Gokul Chandra** - (https://github.com/gokulpch)
