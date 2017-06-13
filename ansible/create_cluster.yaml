@@ -4,8 +4,8 @@
     name_tag2: contrail-K8S-Minion
     region_tag: us-west-2
     availability_zone: us-west-2b
-    cidr_block: 172.24.0.0/16
-    subnet_cidr: 172.24.1.0/24
+    cidr_block: 172.25.0.0/16
+    subnet_cidr: 172.25.1.0/24
     ami: ami-efd0428f
     flavor: t2.xlarge
     key: contrailK8S-keypair
@@ -25,7 +25,7 @@
           az: "{{ availability_zone }}"
       route_tables:
         - subnets:
-            - 172.24.1.0/24
+            - 172.25.1.0/24
           routes:
             - dest: 0.0.0.0/0
               gw: igw
