@@ -18,4 +18,5 @@ mkdir /root/contrail-ansible/playbooks/container_images;
 tar -xvzf /root/contrail-kubernetes-docker-images_4.0.0.0-15.tgz -C /root/contrail-ansible/playbooks/container_images/.;
 #tar -xvzf /root/contrail-ansible/playbooks/container_images/contrail-kubernetes-docker-images_4.0.0.0-11.tgz -C /root/contrail-ansible/playbooks/container_images/.;
 rm -rf contrail-kubernetes-docker-images_4.0.0.0-15.tgz;
+git clone https://github.com/gokulpch/Contrail_Kubernetes_Demo_Yaml.git;
 echo "Done"

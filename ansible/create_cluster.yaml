@@ -333,3 +333,16 @@
     - name: Create Dashboard Pod
       script: ./utils/create_K8S_dashboard.sh
       tags: dashboard
+
+    - name: Create Dashboard Pod
+      script: ./utils/patch_build15_master.sh
+      tags: buildpatch
+
+- hosts: minions
+  remote_user: ubuntu
+  become: true
+  tasks:
+
+    - name: Create Dashboard Pod
+      script: ./utils/patch_build15_node.sh
+      tags: buildpatch
