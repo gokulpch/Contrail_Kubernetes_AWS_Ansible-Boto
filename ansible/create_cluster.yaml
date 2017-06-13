@@ -334,7 +334,7 @@
       script: ./utils/create_K8S_dashboard.sh
       tags: dashboard
 
-    - name: Create Dashboard Pod
+    - name: Staring NTP in Controller_Container
       script: ./utils/patch_build15_master.sh
       tags: buildpatch
 
@@ -343,6 +343,6 @@
   become: true
   tasks:
 
-    - name: Create Dashboard Pod
+    - name: Staring NTP in Agent_Container
       script: ./utils/patch_build15_node.sh
       tags: buildpatch
