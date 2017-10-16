@@ -9,5 +9,5 @@ echo $(date) 'Running wget...'
 wget "${URL}"
 echo 'Done Copying File.............'
 sleep 60s
-kubectl create -f K8Sdashboard.yaml
+kubectl create -f K8Sdashboard.yaml --validate=false
 echo 'Kubernetes Dashboard Created.............'
